@@ -1,5 +1,5 @@
-# debian:stretch-20200130
-FROM debian@sha256:872b72a2b8487e4b91ae27855c7de1671635d3dc2cc0b89651103e55c74ed34a AS base
+# Get matching PI friendly python base
+FROM --platform=linux/arm32/v7 python:3.7-buster AS base
 
 FROM base as build
 RUN apt-get update && apt-get -y install --no-install-recommends \
@@ -13,11 +13,6 @@ RUN apt-get update && apt-get -y install --no-install-recommends \
 	libhdf5-dev \
 	libhdf5-100 \
 	pkg-config \
-	python3 \
-	python3-dev \
-	python3-pip \
-	python3-setuptools \
-	pybind11-dev \
 	wget
 RUN pip3 install wheel==0.34.2 cython==0.29.14 pybind11==2.4.3
 RUN pip3 wheel numpy==1.18.1 && pip3 install numpy-*.whl
